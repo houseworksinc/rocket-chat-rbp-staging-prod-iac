@@ -10,7 +10,7 @@ terraform init -backend=false
 
 # Step 3: Create infrastructure plan for just the tf backend resources
 # Target only the resources needed for our aws backend for terraform state/locking
-terraform plan -var-file=terraform.tfvars -out="./plans/backend.tfplan" -target=module.backend
+terraform plan -var-file=.envs/staging.tfvars -out="./plans/backend.tfplan" -target=module.backend
 
 # Step 4: Apply the infrastructure plan
 read -e -p "Apply the Terraform plan? [Y/N] " YN

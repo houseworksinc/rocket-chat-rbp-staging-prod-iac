@@ -18,7 +18,7 @@ defaultEntryPoints = ["http", "https"]
 [acme]
 
 # Email address used for registration
-email = "Support+StagingEmrChat@houseworksinc.co"
+email = "Support+StagingRbpChat@houseworksinc.co"
 storage = "/etc/traefik/acme/acme.json"
 entryPoint = "https"
 onDemand = false
@@ -42,7 +42,7 @@ OnHostRule = true
     [frontends.rocketchatdashboard.headers]
       HostsProxyHeaders = ['X-CSRFToken']
     [frontends.rocketchatdashboard.routes.dr1]
-      rule = "Host:chat.Staging.emr.houseworksinc.co"
+      rule = "Host:chat.Staging.rbp.houseworksinc.co"
   [frontends.rocketchat]
     backend = "rocketchat"
     passHostHeader = true
