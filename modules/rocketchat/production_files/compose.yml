@@ -1,0 +1,71 @@
+# Production compose.yml
+version: '3'
+
+volumes:
+  mongodb_data: { driver: local }
+  traefik: {}
+
+services:
+  rocketchat:
+    image: registry.rocket.chat/rocketchat/rocket.chat:5.0.0
+    restart: on-failure
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.rocketchat.rule: Host(`${DOMAIN}`)
+      traefik.http.routers.rocketchat.tls: "true"
+      traefik.http.routers.rocketchat.entrypoints: https
+      traefik.http.routers.rocketchat.tls.certresolver: le
+    environment:
+      MONGO_URL: mongodb://mongodb:27017/rocketchat?replicaSet=rs0&directConnection=true
+      MONGO_OPLOG_URL: mongodb://mongodb:27017/local?replicaSet=rs0&directConnection=true
+      ROOT_URL: http://localhost:3000
+      PORT: 3000
+      DEPLOY_METHOD: docker
+      DEPLOY_PLATFORM: linux
+      CREATE_TOKENS_FOR_USERS: "true"
+      #INITIAL_USER: "yes"
+      OVERWRITE_SETTING_Show_Setup_Wizard: "Completed"
+      ADMIN_EMAIL: "Support+ProductionRbpChat@houseworksinc.co"
+      ADMIN_NAME: "ProductionchatadminRBP"
+      ADMIN_PASS: "Adm1n1strat0rProductionRBP"
+      ADMIN_USERNAME: "ProductionchatadminRBP"
+      Accounts_TwoFactorAuthentication_Ena:bled: "False"
+      Accounts_Send_Email_When_Activating: "False"
+      Accounts_Send_Email_When_Deactivating: "False"
+      Accounts_Verify_Email_For_External_Accounts: "False"
+      Accounts_RegistrationForm: "Disabled"
+    depends_on:
+      - mongodb
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+
+  mongodb:
+    image: docker.io/bitnami/mongodb:4.4
+    restart: on-failure
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_PORT_NUMBER: 27017
+      MONGODB_INITIAL_PRIMARY_HOST: mongodb
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_ADVERTISED_HOSTNAME: mongodb
+      MONGODB_ENABLE_JOURNAL: "true"
+      ALLOW_EMPTY_PASSWORD: "yes"
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./traefik/Dockerfile
+    image: traefik
+    depends_on:
+      - rocketchat
+    volumes:
+      - traefik:/etc/traefik/acme
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:5555:5555"
