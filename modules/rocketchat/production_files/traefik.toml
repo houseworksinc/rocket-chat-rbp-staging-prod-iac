@@ -42,7 +42,7 @@ OnHostRule = true
     [frontends.rocketchatdashboard.headers]
       HostsProxyHeaders = ['X-CSRFToken']
     [frontends.rocketchatdashboard.routes.dr1]
-      rule = "Host:chat.Prod.rbp.houseworksinc.co"
+      rule = "Host:chat.prod.rbp.houseworksinc.co"
   [frontends.rocketchat]
     backend = "rocketchat"
     passHostHeader = true
