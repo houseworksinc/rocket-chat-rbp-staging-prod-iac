@@ -3,7 +3,7 @@ version: '3'
 
 volumes:
   mongodb_data: { driver: local }
-  traefik: {} 
+  traefik: {}
 
 services:
   rocketchat:
@@ -22,18 +22,18 @@ services:
       PORT: 3000
       DEPLOY_METHOD: docker
       DEPLOY_PLATFORM: linux
-      CREATE_TOKENS_FOR_USERS : "true"
-      INITIAL_USER: "yes"
-      OVERWRITE_SETTING_Show_Setup_Wizard : "Completed"
-      ADMIN_EMAIL: "Support+StagingEmrChat@houseworksinc.co"
-      ADMIN_NAME: "StagingchatadminEMR"
-      ADMIN_PASS: "Adm1n1strat0rStagingEMR"
-      ADMIN_USERNAME: "Stagingchatadminemr"
-      Accounts_TwoFactorAuthentication_Ena:bled : "False"
-      Accounts_Send_Email_When_Activating : "False"
-      Accounts_Send_Email_When_Deactivating : "False"
-      Accounts_Verify_Email_For_External_Accounts : "False"
-      Accounts_RegistrationForm : "Disabled"
+      CREATE_TOKENS_FOR_USERS: "true"
+      #INITIAL_USER: "yes"
+      OVERWRITE_SETTING_Show_Setup_Wizard: "Completed"
+      ADMIN_EMAIL: "Support+StagingRbpChat@houseworksinc.co"
+      ADMIN_NAME: "StagingchatadminRBP"
+      ADMIN_PASS: "Adm1n1strat0rStagingRBP"
+      ADMIN_USERNAME: "StagingchatadminRBP"
+      Accounts_TwoFactorAuthentication_Ena:bled: "False"
+      Accounts_Send_Email_When_Activating: "False"
+      Accounts_Send_Email_When_Deactivating: "False"
+      Accounts_Verify_Email_For_External_Accounts: "False"
+      Accounts_RegistrationForm: "Disabled"
     depends_on:
       - mongodb
     expose:
@@ -55,7 +55,7 @@ services:
       MONGODB_ADVERTISED_HOSTNAME: mongodb
       MONGODB_ENABLE_JOURNAL: "true"
       ALLOW_EMPTY_PASSWORD: "yes"
-  
+
   traefik:
     build:
       context: .

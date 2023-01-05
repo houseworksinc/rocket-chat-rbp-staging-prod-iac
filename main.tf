@@ -1,7 +1,7 @@
 module "backend" {
   source  = "./modules/backend"
   region  = var.aws_region
-  project = "${var.environment}-${var.project_name}-chat"
+  project = "${var.project_name}-chat"
 }
 
 module "rocketchat" {
