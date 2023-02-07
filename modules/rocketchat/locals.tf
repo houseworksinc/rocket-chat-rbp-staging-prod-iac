@@ -13,3 +13,7 @@ locals {
 locals {
   security_group_name = "${var.environment}-${var.project_name}-chat-sec-grp"
 }
+
+locals {
+  s3_bucket_name = "${var.environment}-${var.project_name}-chat-bucket"
+}
