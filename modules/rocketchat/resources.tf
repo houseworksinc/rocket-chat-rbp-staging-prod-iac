@@ -128,3 +128,15 @@ resource "aws_route53_record" "chat_url" {
   records = ["${aws_eip.chat_eip.public_ip}"]
   zone_id = data.aws_route53_zone.hosted_zone.zone_id
 }
+
+resource "aws_s3_bucket" "chat_bucket" {
+  bucket = local.s3_bucket_name
+  acl    = "private"
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "PUT", "POST", "HEAD"]
+    allowed_origins = ["${local.chat_url}", "houseworksinc.co"]
+    max_age_seconds = 3000
+  }
+}
